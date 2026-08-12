@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n, capacity;
+    cout << "Enter number of items: ";
+    cin >> n;
+
+    int weight[20], profit[20];
+
+    cout << "Enter weights: ";
+    for(int i = 0; i < n; i++)
+        cin >> weight[i];
+
+    cout << "Enter profits: ";
+    for(int i = 0; i < n; i++)
+        cin >> profit[i];
+
+    cout << "Enter capacity: ";
+    cin >> capacity;
+
+    // Sort according to profit/weight ratio
+    for(int i = 0; i < n; i++) {
+        for(int j = i + 1; j < n; j++) {
+            if((float)profit[i]/weight[i] < (float)profit[j]/weight[j]) {
+                swap(profit[i], profit[j]);
+                swap(weight[i], weight[j]);
+            }
+        }
+    }
+
+    float maxProfit = 0;
+
+    for(int i = 0; i < n; i++) {
+        if(weight[i] <= capacity) {
+            capacity -= weight[i];
+            maxProfit += profit[i];
+        }
+        else {
+            maxProfit += (float)profit[i] / weight[i] * capacity;
+            break;
+        }
+    }
+
+    cout << "Maximum profit = " << maxProfit;
+
+    return 0;
+}
