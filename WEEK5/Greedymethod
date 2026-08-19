@@ -1,0 +1,43 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+float knapsack(int n,int W,vector<int>& wt,vector<int>& profit){
+    for(int i=0;i<n;i++){
+        for(int j=i+1;j<n;j++){
+            if((float)profit[i]/wt[i]<(float)profit[j]/wt[j]){
+                swap(profit[i],profit[j]);
+                swap(wt[i],wt[j]);
+            }
+        }
+    }
+    float maxprofit = 0;
+    for(int i=0;i<n;i++){
+        if(wt[i]<= W) {
+            W-=wt[i];
+            maxprofit+=profit[i];
+        }
+        else{
+            maxprofit +=((float)profit[i]/wt[i])*W;
+            break;
+        }
+    }
+    return maxprofit;
+}
+int main(){
+    int n, W;
+    cout<<"No. of items: ";
+    cin>>n;
+    vector<int> wt(n), profit(n);
+    cout<<"Enter the weight of items: ";
+    for(int i=0;i<n;i++){
+        cin>>wt[i];
+    }
+    cout<<"Enter the profit of the items: ";
+    for(int i=0;i<n;i++){
+        cin>>profit[i];
+    }
+    cout<<"Enter the maximum weight: ";
+    cin>>W;
+    cout<<"Maximum profit: "<< knapsack(n,W,wt,profit);
+    return 0;
+}
